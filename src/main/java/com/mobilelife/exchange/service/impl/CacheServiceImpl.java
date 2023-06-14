@@ -42,7 +42,7 @@ public class CacheServiceImpl implements CacheService {
 
   public Map<String, BigDecimal> getRatesFromWS() {
     Cache cache = cacheManager.getCache(cacheName);
-    URI uri = URI.create(url + "/latest?apikey=" + apiKey + "/base_currency=" + baseCurrency);
+    URI uri = URI.create(url + "/latest?apikey=" + apiKey + "&base_currency=" + baseCurrency);
     ResponseEntity<RatesResponse> responseEntity = restTemplate.getForEntity(uri,
         RatesResponse.class);
     RatesResponse ratesResponse = responseEntity.getBody();
