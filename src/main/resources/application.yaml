@@ -1,0 +1,10 @@
+api:
+  apiKey: ${API_KEY:C5SAxplPJYnb6eSU1cpvzdTMm0nEzPLn8NYKNxND}
+  url: ${URL:https://api.freecurrencyapi.com/v1}
+server:
+  port: 8081
+spring:
+  cache:
+    caffeine:
+      spec: maximumSize=1000,expireAfterAccess=600s
+    cache-names: rates
