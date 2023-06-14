@@ -46,7 +46,7 @@ public class ConverterService {
             from);
       }
     } else {
-      throw new ConversionException("These currencies are not found.");
+      throw new ConversionException("These currencies are not present for calculation.");
     }
     return conversionResponse;
   }

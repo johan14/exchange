@@ -1,6 +1,8 @@
 package com.mobilelife.exchange.model;
 
 
+import com.mobilelife.exchange.Currency;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ConversionRequest {
 
-  private String from;
-  private String to;
+  @NotNull
+  private Currency from;
+  @NotNull
+  private Currency to;
+  @NotNull
   private BigDecimal amount;
 }
