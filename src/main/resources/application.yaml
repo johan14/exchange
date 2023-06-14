@@ -1,6 +1,7 @@
 api:
   apiKey: ${API_KEY:C5SAxplPJYnb6eSU1cpvzdTMm0nEzPLn8NYKNxND}
   url: ${URL:https://api.freecurrencyapi.com/v1}
+  baseCurrency: ${BASE_CURRENCY:USD}
 server:
   port: 8081
 spring:

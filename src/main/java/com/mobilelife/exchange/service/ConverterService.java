@@ -5,6 +5,7 @@ import com.mobilelife.exchange.model.ConversionResponse;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ public class ConverterService {
   CacheService cacheService;
   @Autowired
   CacheManager cacheManager;
+  @Value("${api.baseCurrency}")
+  private String baseCurrency;
 
   public ConversionResponse convert(String to, String from, BigDecimal amount) throws Exception {
 
@@ -25,14 +28,14 @@ public class ConverterService {
 
     if (toRate != null && fromRate != null) {
 
-      if (!to.equals("USD") && !from.equals("USD")) {
+      if (!to.equals(baseCurrency) && !from.equals(baseCurrency)) {
 
         BigDecimal fromBaseAmount = BigDecimal.ONE.divide(fromRate, RoundingMode.HALF_DOWN)
             .multiply(amount);
         BigDecimal result = fromBaseAmount.multiply(toRate);
         conversionResponse = new ConversionResponse(result.setScale(2, RoundingMode.HALF_DOWN), to,
             from);
-      } else if (from.equals("USD")) {
+      } else if (from.equals(baseCurrency)) {
         BigDecimal result = amount.multiply(toRate);
         conversionResponse = new ConversionResponse(result.setScale(2, RoundingMode.HALF_DOWN), to,
             from);

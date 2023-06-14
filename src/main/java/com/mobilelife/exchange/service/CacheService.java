@@ -30,6 +30,8 @@ public class CacheService {
   private String apiKey;
   @Value("${spring.cache.cache-names}")
   private String cacheName;
+  @Value("${api.baseCurrency}")
+  private String baseCurrency;
 
   @Cacheable
   public BigDecimal getRate(String currency) {
@@ -39,7 +41,7 @@ public class CacheService {
 
   public Map<String, BigDecimal> getRatesFromWS() {
     Cache cache = cacheManager.getCache(cacheName);
-    URI uri = URI.create(url + "/latest?apikey=" + apiKey);
+    URI uri = URI.create(url + "/latest?apikey=" + apiKey + "/base_currency=" + baseCurrency);
     ResponseEntity<RatesResponse> responseEntity = restTemplate.getForEntity(uri,
         RatesResponse.class);
     RatesResponse ratesResponse = responseEntity.getBody();
