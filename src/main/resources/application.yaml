@@ -9,3 +9,6 @@ spring:
     caffeine:
       spec: maximumSize=1000,expireAfterAccess=600s
     cache-names: rates
+springdoc:
+  api-docs:
+    enabled: true

@@ -35,14 +35,15 @@
       <groupId>org.springframework.boot</groupId>
     </dependency>
     <dependency>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <groupId>org.springdoc</groupId>
+      <version>2.1.0</version>
+    </dependency>
+    <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
       <scope>provided</scope>
       <version>1.18.28</version>
-    </dependency>
-    <dependency>
-      <artifactId>spring-boot-starter-webflux</artifactId>
-      <groupId>org.springframework.boot</groupId>
     </dependency>
   </dependencies>
   <description>exchange</description>

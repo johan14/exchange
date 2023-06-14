@@ -10,6 +10,7 @@ public enum Currency {
   private final String value;
 
   ;
+
   Currency(String value) {
     this.value = value;
   }
