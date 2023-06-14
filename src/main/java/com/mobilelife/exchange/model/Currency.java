@@ -1,4 +1,4 @@
-package com.mobilelife.exchange;
+package com.mobilelife.exchange.model;
 
 public enum Currency {
   EUR("EUR"), USD("USD"), JPY("JPY"), BGN("BGN"), CZK("CZK"), DKK("DKK"), GBP("GBP"), HUF(
@@ -8,8 +8,6 @@ public enum Currency {
       "NZD"), PHP("PHP"), SGD("SGD"), THB("THB"), ZAR("ZAR");
 
   private final String value;
-
-  ;
 
   Currency(String value) {
     this.value = value;

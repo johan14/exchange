@@ -1,6 +1,8 @@
 api:
   apiKey: ${API_KEY:C5SAxplPJYnb6eSU1cpvzdTMm0nEzPLn8NYKNxND}
   url: ${URL:https://api.freecurrencyapi.com/v1}
+  apiKeyBackup: ${API_KEY_BACKUP:0f282dd949bebd4e3609267c5d48cceb}
+  urlBackup: ${URL_BACKUP:http://data.fixer.io/api}
   baseCurrency: ${BASE_CURRENCY:USD}
 server:
   port: 8081

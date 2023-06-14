@@ -45,6 +45,15 @@
       <scope>provided</scope>
       <version>1.18.28</version>
     </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-aop</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>resilience4j-spring-boot3</artifactId>
+      <groupId>io.github.resilience4j</groupId>
+      <version>2.0.2</version>
+    </dependency>
   </dependencies>
   <description>exchange</description>
   <groupId>com.mobilelife</groupId>

@@ -1,8 +1,7 @@
 package com.mobilelife.exchange.model;
 
-
-import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,12 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConversionRequest {
+public class BackupRatesResponse {
 
-  @NotNull
-  private Currency from;
-  @NotNull
-  private Currency to;
-  @NotNull
-  private BigDecimal amount;
+  Map<String, BigDecimal> rates;
+
 }
