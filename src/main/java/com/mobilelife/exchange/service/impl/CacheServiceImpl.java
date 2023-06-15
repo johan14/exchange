@@ -22,6 +22,7 @@ public class CacheServiceImpl implements CacheService {
   @Autowired
   RestClient restClient;
 
+
   @Cacheable(cacheNames = "rates")
   public BigDecimal getRate(String currency) {
     log.info("Getting results without using cache.");

@@ -1,6 +1,6 @@
 package com.mobilelife.exchange.advice;
 
-import com.mobilelife.exchange.model.ExceptionResponse;
+import com.mobilelife.exchange.model.response.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

@@ -1,9 +1,10 @@
 api:
   apiKey: ${API_KEY:C5SAxplPJYnb6eSU1cpvzdTMm0nEzPLn8NYKNxND}
   url: ${URL:https://api.freecurrencyapi.com/v1}
-  apiKeyBackup: ${API_KEY_BACKUP:0f282dd949bebd4e3609267c5d48cceb}
-  urlBackup: ${URL_BACKUP:http://data.fixer.io/api}
+  apiKeyFallback: ${API_KEY_FALLBACK:0f282dd949bebd4e3609267c5d48cceb}
+  urlFallback: ${URL_FALLBACK:http://data.fixer.io/api}
   baseCurrency: ${BASE_CURRENCY:USD}
+  baseCurrencyFallback: ${BASE_CURRENCY_FALLBACK:EUR}
 server:
   port: 8081
 spring:

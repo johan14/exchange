@@ -1,7 +1,8 @@
 package com.mobilelife.exchange.clients;
 
-import com.mobilelife.exchange.model.BackupRatesResponse;
-import com.mobilelife.exchange.model.RatesResponse;
+import com.mobilelife.exchange.model.response.FallbackRatesResponse;
+import com.mobilelife.exchange.model.response.RatesResponse;
+import com.mobilelife.exchange.service.ConversionService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -24,20 +25,24 @@ public class RestClient {
   CacheManager cacheManager;
   @Autowired
   RestTemplate restTemplate;
+  @Autowired
+  ConversionService conversionService;
   @Value("${api.url}")
   private String url;
   @Value("${api.apiKey}")
   private String apiKey;
-  @Value("${api.urlBackup}")
-  private String urlBackup;
-  @Value("${api.apiKeyBackup}")
-  private String apiKeyBackup;
+  @Value("${api.urlFallback}")
+  private String urlFallback;
+  @Value("${api.apiKeyFallback}")
+  private String apiKeyFallback;
   @Value("${spring.cache.cache-names}")
   private String cacheName;
   @Value("${api.baseCurrency}")
   private String baseCurrency;
+  @Value("${api.baseCurrencyFallback}")
+  private String baseCurrencyFallback;
 
-  @CircuitBreaker(name = "ratesWS", fallbackMethod = "getRatesFromBackupWS")
+  @CircuitBreaker(name = "ratesWS", fallbackMethod = "getRatesFromFallbackWS")
   public Map<String, BigDecimal> getRatesFromWS() {
     Cache cache = cacheManager.getCache(cacheName);
     URI uri = URI.create(url + "/latest?apikey=" + apiKey + "&base_currency=" + baseCurrency);
@@ -46,20 +51,22 @@ public class RestClient {
     RatesResponse ratesResponse = responseEntity.getBody();
     if (cache != null && ratesResponse != null && ratesResponse.getData() != null) {
       ratesResponse.getData().forEach(cache::put);
+      conversionService.setBaseCurrency(baseCurrency);
       return ratesResponse.getData();
     }
     return Collections.emptyMap();
   }
 
-  public Map<String, BigDecimal> getRatesFromBackupWS(Throwable throwable) {
+  public Map<String, BigDecimal> getRatesFromFallbackWS(Throwable throwable) {
     log.error(throwable.getMessage());
     Cache cache = cacheManager.getCache(cacheName);
-    URI uri = URI.create(urlBackup + "/latest?access_key=" + apiKeyBackup);
-    ResponseEntity<BackupRatesResponse> responseEntity = restTemplate.getForEntity(uri,
-        BackupRatesResponse.class);
-    BackupRatesResponse ratesResponse = responseEntity.getBody();
+    URI uri = URI.create(urlFallback + "/latest?access_key=" + apiKeyFallback);
+    ResponseEntity<FallbackRatesResponse> responseEntity = restTemplate.getForEntity(uri,
+        FallbackRatesResponse.class);
+    FallbackRatesResponse ratesResponse = responseEntity.getBody();
     if (cache != null && ratesResponse != null && ratesResponse.getRates() != null) {
       ratesResponse.getRates().forEach(cache::put);
+      conversionService.setBaseCurrency(baseCurrencyFallback);
       return ratesResponse.getRates();
     }
     return Collections.emptyMap();

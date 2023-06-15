@@ -1,4 +1,4 @@
-package com.mobilelife.exchange.model;
+package com.mobilelife.exchange.model.response;
 
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;

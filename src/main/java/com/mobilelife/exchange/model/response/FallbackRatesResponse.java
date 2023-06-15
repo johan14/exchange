@@ -1,4 +1,4 @@
-package com.mobilelife.exchange.model;
+package com.mobilelife.exchange.model.response;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RatesResponse {
+public class FallbackRatesResponse {
 
-  private Map<String, BigDecimal> data;
+  Map<String, BigDecimal> rates;
+
 }

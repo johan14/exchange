@@ -1,6 +1,7 @@
-package com.mobilelife.exchange.model;
+package com.mobilelife.exchange.model.request;
 
 
+import com.mobilelife.exchange.model.Currency;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
