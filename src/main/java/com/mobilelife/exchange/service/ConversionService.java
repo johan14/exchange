@@ -7,8 +7,4 @@ public interface ConversionService {
 
   public ConversionResponse convert(String to, String from, BigDecimal amount) throws Exception;
 
-  public String getBaseCurrency();
-
-  public void setBaseCurrency(String baseCurrency);
-
 }
