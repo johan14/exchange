@@ -24,14 +24,14 @@ public class CacheServiceImpl implements CacheService {
 
 
   @Cacheable(cacheNames = "rates")
-  public BigDecimal getRate(String currency) {
+  public BigDecimal getRate(String currency) throws Exception {
     log.info("Getting results without using cache.");
     return restClient.getRatesFromWS().get(currency);
   }
 
   //@Scheduled(fixedRate = 1, timeUnit = TimeUnit.MINUTES)
   @Async
-  void populateCache() {
+  void populateCache() throws Exception {
     restClient.getRatesFromWS();
   }
 

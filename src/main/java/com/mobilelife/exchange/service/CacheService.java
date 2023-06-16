@@ -4,5 +4,5 @@ import java.math.BigDecimal;
 
 public interface CacheService {
 
-  public BigDecimal getRate(String currency);
+  public BigDecimal getRate(String currency) throws Exception;
 }

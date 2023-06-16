@@ -74,7 +74,7 @@ public class ConversionServiceTest {
   }
 
   @Test
-  void testConversionWhenMissingRates() {
+  void testConversionWhenMissingRates() throws Exception {
 
     try (MockedStatic<CommonUtil> utilities = Mockito.mockStatic(CommonUtil.class)) {
       utilities.when(CommonUtil::getBaseCurrency).thenReturn("USD");

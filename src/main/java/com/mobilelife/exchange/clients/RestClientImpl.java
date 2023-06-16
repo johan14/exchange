@@ -1,12 +1,12 @@
 package com.mobilelife.exchange.clients;
 
+import com.mobilelife.exchange.exception.ConversionException;
 import com.mobilelife.exchange.model.response.FallbackRatesResponse;
 import com.mobilelife.exchange.model.response.RatesResponse;
 import com.mobilelife.exchange.utils.CommonUtil;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.util.Collections;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class RestClientImpl implements RestClient {
   private String baseCurrencyFallback;
 
   @CircuitBreaker(name = "ratesWS", fallbackMethod = "getRatesFromFallbackWS")
-  public Map<String, BigDecimal> getRatesFromWS() {
+  public Map<String, BigDecimal> getRatesFromWS() throws Exception {
     Cache cache = cacheManager.getCache(cacheName);
     if (cache != null) {
       log.info("Clearing cache");
@@ -55,11 +55,12 @@ public class RestClientImpl implements RestClient {
       ratesResponse.getData().forEach(cache::put);
       CommonUtil.setBaseCurrency(baseCurrency);
       return ratesResponse.getData();
+    } else {
+      throw new ConversionException("Cannot get values");
     }
-    return Collections.emptyMap();
   }
 
-  public Map<String, BigDecimal> getRatesFromFallbackWS(Throwable throwable) {
+  public Map<String, BigDecimal> getRatesFromFallbackWS(Throwable throwable) throws Exception {
     log.error(throwable.getMessage());
     log.info("Executing fallback method");
     Cache cache = cacheManager.getCache(cacheName);
@@ -76,7 +77,7 @@ public class RestClientImpl implements RestClient {
       CommonUtil.setBaseCurrency(baseCurrencyFallback);
       return ratesResponse.getRates();
     }
-    return Collections.emptyMap();
+    throw new ConversionException("Cannot get values");
   }
 
 }
