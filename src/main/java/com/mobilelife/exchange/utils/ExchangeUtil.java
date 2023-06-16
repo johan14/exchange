@@ -11,13 +11,13 @@ public class ExchangeUtil {
 
     if (!toCurrency.equals(CommonUtil.getBaseCurrency()) && !fromCurrency.equals(
         CommonUtil.getBaseCurrency())) {
-      BigDecimal fromBaseAmount = BigDecimal.ONE.divide(fromRate, RoundingMode.HALF_DOWN)
+      BigDecimal fromBaseAmount = BigDecimal.ONE.divide(fromRate, 2, RoundingMode.HALF_DOWN)
           .multiply(amount);
       return fromBaseAmount.multiply(toRate);
     } else if (fromCurrency.equals(CommonUtil.getBaseCurrency())) {
       return amount.multiply(toRate);
     } else {
-      return amount.multiply(BigDecimal.ONE.divide(fromRate, RoundingMode.HALF_DOWN));
+      return amount.multiply(BigDecimal.ONE.divide(fromRate, 2, RoundingMode.HALF_DOWN));
     }
   }
 }
