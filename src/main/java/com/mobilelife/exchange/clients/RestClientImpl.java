@@ -22,9 +22,9 @@ import org.springframework.web.client.RestTemplate;
 public class RestClientImpl implements RestClient {
 
   @Autowired
-  CacheManager cacheManager;
+  private CacheManager cacheManager;
   @Autowired
-  RestTemplate restTemplate;
+  private RestTemplate restTemplate;
   @Value("${api.url}")
   private String url;
   @Value("${api.apiKey}")
