@@ -8,12 +8,14 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,8 +42,9 @@ public class RestClientImpl implements RestClient {
   @Value("${api.baseCurrencyFallback}")
   private String baseCurrencyFallback;
 
+  @Async
   @CircuitBreaker(name = "ratesWS", fallbackMethod = "getRatesFromFallbackWS")
-  public Map<String, BigDecimal> getRatesFromWS() throws Exception {
+  public CompletableFuture<Map<String, BigDecimal>> getRatesFromWS() throws Exception {
     Cache cache = cacheManager.getCache(cacheName);
     if (cache != null) {
       log.info("Clearing cache");
@@ -54,13 +57,15 @@ public class RestClientImpl implements RestClient {
     if (cache != null && ratesResponse != null && ratesResponse.getData() != null) {
       ratesResponse.getData().forEach(cache::put);
       CommonUtil.setBaseCurrency(baseCurrency);
-      return ratesResponse.getData();
+      return CompletableFuture.completedFuture(ratesResponse.getData());
     } else {
       throw new ConversionException("Cannot get values");
     }
   }
 
-  public Map<String, BigDecimal> getRatesFromFallbackWS(Throwable throwable) throws Exception {
+  @Async
+  public CompletableFuture<Map<String, BigDecimal>> getRatesFromFallbackWS(Throwable throwable)
+      throws Exception {
     log.error(throwable.getMessage());
     log.info("Executing fallback method");
     Cache cache = cacheManager.getCache(cacheName);
@@ -75,7 +80,7 @@ public class RestClientImpl implements RestClient {
     if (cache != null && ratesResponse != null && ratesResponse.getRates() != null) {
       ratesResponse.getRates().forEach(cache::put);
       CommonUtil.setBaseCurrency(baseCurrencyFallback);
-      return ratesResponse.getRates();
+      return CompletableFuture.completedFuture(ratesResponse.getRates());
     }
     throw new ConversionException("Cannot get values");
   }

@@ -4,6 +4,7 @@ import com.mobilelife.exchange.clients.RestClient;
 import com.mobilelife.exchange.service.impl.CacheServiceImpl;
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,14 +25,16 @@ public class CasheServiceTest {
   @Test
   void getRate() throws Exception {
 
-    Mockito.when(restClient.getRatesFromWS()).thenReturn(Map.of("USD", BigDecimal.ONE));
+    Mockito.when(restClient.getRatesFromWS())
+        .thenReturn(CompletableFuture.completedFuture(Map.of("USD", BigDecimal.ONE)));
     Assertions.assertEquals(BigDecimal.ONE, cacheService.getRate("USD"));
   }
 
   @Test
   void getRateInvalidCurrency() throws Exception {
 
-    Mockito.when(restClient.getRatesFromWS()).thenReturn(Map.of("USD", BigDecimal.ONE));
+    Mockito.when(restClient.getRatesFromWS())
+        .thenReturn(CompletableFuture.completedFuture(Map.of("USD", BigDecimal.ONE)));
     Assertions.assertNull(cacheService.getRate("EUR"));
   }
 }
