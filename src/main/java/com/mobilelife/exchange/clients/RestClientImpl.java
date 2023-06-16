@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -21,12 +21,13 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class RestClientImpl implements RestClient {
 
-  @Autowired
-  private CacheManager cacheManager;
-  @Autowired
-  private RestTemplate restTemplate;
+
+  private final CacheManager cacheManager;
+
+  private final RestTemplate restTemplate;
   @Value("${api.url}")
   private String url;
   @Value("${api.apiKey}")

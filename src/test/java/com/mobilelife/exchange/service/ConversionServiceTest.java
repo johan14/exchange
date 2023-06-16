@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class ConversionServiceTest {
 
   @InjectMocks
-  private ConversionService conversionService = new ConversionServiceImpl();
+  private ConversionServiceImpl conversionService;
   @Mock
   private CacheService cacheService;
 
@@ -82,7 +82,6 @@ public class ConversionServiceTest {
       Assertions.assertThrows(ConversionException.class,
           () -> conversionService.convert(Currency.ALL.getValue(), Currency.USD.getValue(),
               BigDecimal.ONE));
-
     }
   }
 }

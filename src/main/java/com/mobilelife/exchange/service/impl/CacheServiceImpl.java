@@ -5,24 +5,20 @@ import com.mobilelife.exchange.service.CacheService;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class CacheServiceImpl implements CacheService {
 
-  @Autowired
-  RestTemplate restTemplate;
-  @Autowired
-  CacheManager cacheManager;
-  @Autowired
-  RestClient restClient;
+  private final RestClient restClient;
 
 
   @Cacheable(cacheNames = "rates")
@@ -32,7 +28,7 @@ public class CacheServiceImpl implements CacheService {
     return completableFuture.get().get(currency);
   }
 
-  //@Scheduled(fixedRate = 1, timeUnit = TimeUnit.MINUTES)
+  @Scheduled(fixedRate = 60, timeUnit = TimeUnit.MINUTES)
   @Async
   void populateCache() throws Exception {
     restClient.getRatesFromWS();

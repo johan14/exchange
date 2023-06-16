@@ -1,6 +1,5 @@
 package com.mobilelife.exchange.client;
 
-import com.mobilelife.exchange.clients.RestClient;
 import com.mobilelife.exchange.clients.RestClientImpl;
 import com.mobilelife.exchange.exception.ConversionException;
 import com.mobilelife.exchange.model.response.FallbackRatesResponse;
@@ -31,7 +30,7 @@ public class RestClientTest {
   @Value("${spring.cache.cache-names}")
   private String cacheName;
   @InjectMocks
-  private RestClient restClient = new RestClientImpl();
+  private RestClientImpl restClient;
 
   @Test
   void getRatesFromWS() {

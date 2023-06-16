@@ -4,7 +4,7 @@ import com.mobilelife.exchange.model.request.ConversionRequest;
 import com.mobilelife.exchange.model.response.ConversionResponse;
 import com.mobilelife.exchange.service.ConversionService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/convert")
 public class ConversionController {
 
-  @Autowired
-  ConversionService conversionService;
+  private final ConversionService conversionService;
 
   @PostMapping
   public ResponseEntity<ConversionResponse> convert(

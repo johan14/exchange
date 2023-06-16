@@ -7,17 +7,14 @@ import com.mobilelife.exchange.service.ConversionService;
 import com.mobilelife.exchange.utils.ExchangeUtil;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ConversionServiceImpl implements ConversionService {
 
-  @Autowired
-  CacheService cacheService;
-  @Autowired
-  CacheManager cacheManager;
+  private final CacheService cacheService;
 
   public ConversionResponse convert(String toCurrency, String fromCurrency, BigDecimal amount)
       throws Exception {

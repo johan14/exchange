@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class CasheServiceTest {
 
   @InjectMocks
-  CacheService cacheService = new CacheServiceImpl();
+  CacheServiceImpl cacheService;
 
   @Mock
   RestClient restClient;
